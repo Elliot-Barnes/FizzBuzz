@@ -1,7 +1,7 @@
 package com.example.fizzbuzz
 
 fun main(){
-    for (i in 1..200){
+    for (i in 1..100){
         var output = ""
         if (i % 3 == 0){
             output += "Fizz"
