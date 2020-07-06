@@ -1,38 +1,42 @@
 package com.example.fizzbuzz
 
 fun main(){
-    for (i in 1..300){
-        var output = ""
+    val numberOfRules = 5 //17 doesn't add anything so ignore that
+    for (i in 1..1785){
+        // a flag to check if the number passes any of the checks
+        var divisible = false
+        val output = Array(numberOfRules) {""}
+        if (i % 3 == 0){
+            output[0] = "Fizz"
+            divisible = true
+        }
+
         if (i % 5 == 0){
-            output += "Buzz"
+            output[2] = "Buzz"
+            divisible = true
         }
         if (i % 7 == 0){
-            output += "Bang"
+            output[3] = "Bang"
+            divisible = true
         }
         //Bong should be printed alone
         if (i % 11 == 0){
-            output = "Bong"
+            for (j in 0..4) output[j] = ""
+            output[4] = "Bong"
+            divisible = true
         }
-        //Fezz should be printed infront of all the B's
         if (i % 13 == 0) {
-            output = "Fezz" + output
+            output[1] = "Fezz"
+            divisible = true
         }
-        //Fizz should be printed first unless bong is present
-        if (i % 3 == 0 && i % 11 != 0){
-            output = "Fizz" + output
-        }
-        //Takes the last 4 characters and places them at the front of the new string
+
+        //Reverses the output
         if (i % 17 == 0){
-            var reversedOutput = ""
-            while (output != ""){
-                reversedOutput += output.subSequence(output.length-4,output.length)
-                output = output.subSequence(0,output.length - 4).toString()
-            }
-            output = reversedOutput
+            output.reverse()
         }
-        if (output == ""){
-            output = i.toString()
+        if (!divisible){
+            output[0] = i.toString()
         }
-        println(output)
+        println(output.joinToString(""))
     }
 }
