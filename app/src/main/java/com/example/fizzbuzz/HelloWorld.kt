@@ -21,7 +21,7 @@ fun main(){
         if (i % 3 == 0 && i % 11 != 0){
             output = "Fizz" + output
         }
-        //Takes the last 4 characters and
+        //Takes the last 4 characters and places them at the front of the new string
         if (i % 17 == 0){
             var reversedOutput = ""
             while (output != ""){
