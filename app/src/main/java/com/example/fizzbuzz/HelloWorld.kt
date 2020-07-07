@@ -16,9 +16,9 @@ fun main(){
     val rules = listOf(3,13,5,7) //11 works differently
     val words = listOf("Fizz","Fezz", "Buzz", "Bang")
     val modRules = rules zip words
-
+    val ruleList = modRules.map { j-> constructModRule(j) }
     for (i in 1..1785){
-        var output = modRules.map{j-> constructModRule(j)(i) }
+        var output = ruleList.map{f -> f(i)}
         //bong should be printed alone or after fezz
         if (i % 11 == 0){
             output = if (i % 13 == 0) {
