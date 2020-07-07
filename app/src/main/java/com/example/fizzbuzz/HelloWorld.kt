@@ -39,20 +39,10 @@ fun constructInsertionModRule(rule: Int, word: String): (Int, List<String>) -> L
     return (fun(i: Int, output: List<String>): List<String>{
         var out = output
         if (i % rule == 0){
-            var existB = false
             //Find first element beginning with a B
-            for (j in output.indices){
-                if (output[j].isNotEmpty()){
-                    if (output[j][0] == 'B') {
-                        out = output.subList(0, j) + word + output.subList(j, output.size)
-                        existB = true
-                        break
-                    }
-                }
-            }
-            if (!existB){
-                out = out + word
-            }
+            val firstList = out.takeWhile { !it.startsWith('B') }
+            val endList = out.subList(firstList.size,out.size)
+            out = firstList + word + endList
         }
         return out
     })
