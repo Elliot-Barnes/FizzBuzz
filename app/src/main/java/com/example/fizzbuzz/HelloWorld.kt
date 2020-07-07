@@ -18,13 +18,7 @@ fun constructModRule(rule:Int, word:String): (Int) -> String {
 fun constructModReplaceRule(rule: Int, word: String): (Int, List<String>) -> List<String> {
     return (fun(i: Int, output: List<String>): List<String> {
         return if (i % rule == 0){
-            // 11 rule keeps fezz but removes everything else
-            val out = if (i % 13 == 0){
-                listOf("Fezz")
-            } else {
-                listOf()
-            }
-            out + word
+            listOf(word)
         } else {
             output
         }
@@ -76,7 +70,7 @@ fun main(){
     insertRuleList = insertRuleList + constructInsertionModRule(13, "Fezz")
     reverseRuleList = reverseRuleList + constructModReverseRule(17)
 
-    for (i in 1..3315){
+    for (i in 1..143){
         var output = ruleList.map{f -> f(i)}
         output = replaceRuleList.fold(output,{ x,rule -> rule(i,x)})
         output = insertRuleList.fold(output,{x,rule -> rule(i,x)})
