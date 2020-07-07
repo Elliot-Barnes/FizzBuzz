@@ -4,7 +4,7 @@ import android.provider.UserDictionary
 //returns a function that does the normal mod rules
 fun constructModRule(words: List<String>, rules: List<Int>): (Int, Array<String>) -> Array<String> {
     return (fun(i: Int, output: Array<String>):Array<String>{
-        for (j in 0..rules.size-1) {
+        for (j in rules.indices) {
             if (i%rules[j] == 0){
                 output[j] = words[j]
             }
@@ -15,12 +15,13 @@ fun constructModRule(words: List<String>, rules: List<Int>): (Int, Array<String>
 
 fun main(){
     val numberOfRules = 5 //17 doesn't add anything so ignore that
+    val rules = listOf(3,13,5,7) //11 works differently
+    val words = listOf("Fizz","Fezz", "Buzz", "Bang")
+    val modRule = constructModRule(words,rules)
     for (i in 1..105){
         // a flag to check if the number passes any of the checks
         var output = Array(numberOfRules) {""}
-        val rules = listOf(3,13,5,7) //11 works differently
-        val words = listOf("Fizz","Fezz", "Buzz", "Bang")
-        output = constructModRule(words,rules)(i,output)
+        output = modRule(i,output)
 
         //bong should be printed alone or after fezz
         if (i % 11 == 0){
