@@ -41,20 +41,45 @@ fun constructModReverseRule(rule: Int): (Int, List<String>) -> List<String> {
     })
 }
 
+fun constructInsertionModRule(rule: Int, word: String): (Int, List<String>) -> List<String> {
+    return (fun(i: Int, output: List<String>): List<String>{
+        var out = output
+        if (i % rule == 0){
+            var existB = false
+            //Find first element beginning with a B
+            for (j in output.indices){
+                if (output[j].isNotEmpty()){
+                    if (output[j][0] == 'B') {
+                        out = output.subList(0, j) + word + output.subList(j, output.size)
+                        existB = true
+                        break
+                    }
+                }
+            }
+            if (!existB){
+                out = out + word
+            }
+        }
+        return out
+    })
+}
+
 fun main(){
     var ruleList = listOf<(Int)->String>()
     var replaceRuleList = listOf<(Int, List<String>)-> List<String>>()
     var reverseRuleList = listOf<(Int, List<String>)-> List<String>>()
+    var insertRuleList = listOf<(Int, List<String>)-> List<String>>()
     ruleList = ruleList + constructModRule(3,"Fizz")
-    ruleList = ruleList + constructModRule(13,"Fezz")
     ruleList = ruleList + constructModRule(5,"Buzz")
     ruleList = ruleList + constructModRule(7, "Bang")
     replaceRuleList = replaceRuleList + constructModReplaceRule(11, "Bong")
+    insertRuleList = insertRuleList + constructInsertionModRule(13, "Fezz")
     reverseRuleList = reverseRuleList + constructModReverseRule(17)
-    for (i in 1..1785){
+
+    for (i in 1..3315){
         var output = ruleList.map{f -> f(i)}
-        //bong should be printed alone or after fezz
         output = replaceRuleList.fold(output,{ x,rule -> rule(i,x)})
+        output = insertRuleList.fold(output,{x,rule -> rule(i,x)})
         //reverses if divisible by 17
         output = reverseRuleList.fold(output,{x,f -> f(i,x) })
         val outputString = output.joinToString("")
